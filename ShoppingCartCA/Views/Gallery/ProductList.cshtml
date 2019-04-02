@@ -1,0 +1,19 @@
+﻿@using ShoppingCartCA.Models
+@{
+    ViewBag.Title = "Gallery";
+    var products = (List<Products>)ViewData["productList"];
+
+}
+
+
+    @foreach (var product in products)
+    {
+        <p>ProductID : @product.ProductID</p>
+        <p>Name : @product.Name</p>
+        <p>Price : @product.Price</p>
+        <p>********</p>
+    }
+
+
+
+
