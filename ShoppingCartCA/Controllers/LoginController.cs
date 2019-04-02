@@ -3,15 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ShoppingCartCA.Models;
+using ShoppingCartCA.DB;
+using System.Diagnostics;
+using System.Data.SqlClient;
 
 namespace ShoppingCartCA.Controllers
 {
     public class LoginController : Controller
     {
-        // GET: Login
-        public ActionResult Index()
+        public ActionResult LoginUser(string Username, string Password)
         {
+            if (Username == null)
             return View();
+
+            User user = UsersData.GetUserByUserName(Username);
+            if (user.Password != Password)
+            {
+                return View();
+            }
+
+            return RedirectToAction("Contact", "Home");
+            
         }
     }
 }
