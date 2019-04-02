@@ -12,7 +12,6 @@ namespace ShoppingCartCA.Models
         public string UserName { get; set; }
         public string ProductName { get; set; }
         public string ActivationCode { get; set; }
-
         public long PurchasedDate { get; set; }
 
     }
