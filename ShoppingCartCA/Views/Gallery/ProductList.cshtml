@@ -2,45 +2,24 @@
 @{
     ViewBag.Title = "Gallery";
     var products = (List<Products>)ViewData["productList"];
+    var listSize = products.Count;
     var count = 1;
+    var cartCount = 0;
 }
-
-<table>
-
-    @foreach (var product in products)
-    {
-        /*        ele += '<td><div class="card" id="' + i + '" onClick = getId(this.id)><div class= "img"></div><b class = "card-title">.NET Charts</b><p class = "card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio qui possimus quibusdam!</p><input type="button" name="" value="$' + i + ' - Add to Cart" class="card-button"></div></td>';
-*/
-        
-        <td>
-            <div class="card" id="@product.ProductID" onclick="getId(this.id)">
-                <div class="img"><img src="@product.Image" /></div>
-                <b class="card-title">@product.Name</b>
-                <p class="card-text">@product.Description</p>
-                <input type="button" name="" value="@product.Price - Add to Cart" class="card-button">
-            </div>
-        </td>
-
-
-    }
-</table>
-
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Assignment</title>
-</head>
+<html>
+<body>
 <style>
     body {
         background: #dac5c5;
     }
 
     .card {
+        position: relative;
         background: #e6e6e6;
         width: 270px;
         height: 300px;
         padding-top: 10px;
-        margin:10px 10px;/*top,bottom  left,right */ 
+        margin: 10px 10px; /*top,bottom  left,right */
     }
 
     .img {
@@ -55,52 +34,67 @@
     }
 
     .card-text {
+        max-height: 70px;
         font-size: 12px;
         padding-left: 10%;
+        overflow-y: hidden;
     }
 
     .card-button {
-        margin: 0 14%;
+        position: absolute;
+        bottom: 10px;
+        left: 80px;
     }
 </style>
-<body>
-    <table id="card-collection"></table>
-</body>
-<script type="text/javascript">
-    var result = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-    var v = document.createElement('tr');
-    document.getElementById('card-collection').appendChild(v);
-    var ele = "";
-    var appended = false;
-    int i = 0;
-    foreach(var product in @products) {
-        // var id = result[i]['id'];
-        ele += '<td><div class="card" id="' + i + '" onClick = getId(this.id)><div class= "img"></div><b class = "card-title">.NET Charts</b><p class = "card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio qui possimus quibusdam!</p><input type="button" name="" value="$' + i + ' - Add to Cart" class="card-button"></div></td>';
 
-        if (i % 3 == 0 && i !== result.length) {
+@*Show Cart Count*@ 
+      <script>
+        document.cookie = 0;
+    </script>
+Cart : <div id="cart" class=card-title>0</div>
+  
 
-            var v = document.createElement('tr');
-            document.getElementById('card-collection').appendChild(v);
-            v.innerHTML = ele;
-            var ele = "";
+<table>
+    @{
+        @:<tr>
+            foreach (var product in products)
+            {
+        <td>
+            <div class="card" id="@product.ProductID">
+                <div class="img"><img src="@product.Image" /></div>
+                <b class="card-title">@product.Name</b>
+                <p class="card-text">@product.Description</p>
+                <button id="@product.ProductID" class="card-button" onclick="addToCart(@product.ProductID)">
+                    @product.Price - Add to Cart
+                </button>
+            </div>
+        </td>
+
+        if (count % 3 == 0)
+        {
+        @:</tr>
+        @: <tr>
         }
-        if (i == result.length) {
-            var v = document.createElement('tr');
-            document.getElementById('card-collection').appendChild(v);
-            v.innerHTML = ele;
-            var ele = "";
+            if (count == listSize) {
+                @:</tr>
+            }
+
+            count++;
         }
-        i++;
+@:</tr>
     }
-    function addCardRow(ele) {
+</table>
 
+
+<script>
+    var cartArray= [] ;
+    function addToCart(productId) {
+        var cartCount = document.cookie;
+        cartCount = cartCount * 1 + 1;
+        document.getElementById("cart").innerHTML = cartCount ;
+        document.cookie = cartCount;
     }
-    function getId(item_id) {
-        console.log(item_id);
-    }
-
-    // v.innerHTML ='<td><div class="card" id="'+ 2 +'"><div class= "img"></div><b class = "card-title">.NET Charts</b><p class = "card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio qui possimus quibusdam!</p><input type="button" name="" value="$99 - Add to Cart" class="card-button"></div></td><td><div class="card"><div class= "img"></div><b class = "card-title">.NET Charts</b><p class = "card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio qui possimus quibusdam!</p><input type="button" name="" value="$99 - Add to Cart" class="card-button"></div></td>';
-
-
 </script>
+
+</body>
 </html>
