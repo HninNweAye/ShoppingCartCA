@@ -4,7 +4,6 @@
     var products = (List<Products>)ViewData["productList"];
     var listSize = products.Count;
     var count = 1;
-    var cartCount = 0;
 }
 <html>
 <body>
@@ -59,7 +58,7 @@ Cart : <div id="cart" class=card-title></div>
             {
         <td>
             <div class="card" id="@product.ProductID">
-                <div class="img"><img src="@product.Image" /></div>
+                <div class="img"><img src="~/Images/@product.Image" /></div>
                 <b class="card-title">@product.Name</b>
                 <p class="card-text">@product.Description</p>
                 <button id="@product.ProductID" class="card-button" onclick="addToCart(@product.ProductID)">
@@ -88,14 +87,18 @@ Cart : <div id="cart" class=card-title></div>
     setCartCount();
     var cartArray= [];
     var total;
+    var cookie;// variable for storing cookie data only without cookie name
+
 
     function addToCart(productId) {
+    
         total = total * 1 + 1;
         document.getElementById("cart").innerHTML = total;
         cartArray[productId] = getProductCount(productId) * 1 + 1; 
         updateCookie();
-        console.log("Cookie   =>  " + document.cookie);
+        console.log("Cookie   =>  " + cookie);
     }
+
 
     //search product in the cookie 
     // if the product is already exist then find and return it's quantity 
@@ -103,7 +106,7 @@ Cart : <div id="cart" class=card-title></div>
     function getProductCount(productId) {
         var totalQty = 0;
         if (document.cookie.indexOf(productId) == -1) return 0; // if productId doesn't  exist in cookie then  indexOf function will return -1 .
-        var cookieData = document.cookie.split('/'); // by splitting '/' then cookieData is array which will have each product in format(productId=quantity)
+        var cookieData = cookie.split('/'); // by splitting '/' then cookieData is array which will have each product in format(productId=quantity)
         for (var i = 0; i < cookieData.length; i++) {
             var qty = cookieData[i].split('='); // then splity by '=' then qty array will have productId in index0 and quantity in index1
             if(qty[0] == productId)
@@ -112,24 +115,32 @@ Cart : <div id="cart" class=card-title></div>
         return totalQty;
     }
 
-    //
+
+    //get cookie data only without cookie name and find total quantity of all products in the cart from the cookie
     function setCartCount()
     {
+        cookie = getCookie() || "";// just removing cookie name("Cart=") from cookie
         total = getTotalFromCookie();
         if (total == "undefined") { total = 0; }
         document.getElementById("cart").innerHTML = total;
     }
 
+
+
     // get total quantity of all products in the cart from the cookie
     function getTotalFromCookie() {
-        var total = "";
-        var cookieData = document.cookie.split('/');
+        var total = 0;
+        if (cookie === "") return 0;
+        var cookieData = cookie.split('/');
+        console.log("CookieData   =>  " + cookieData);
         for (var i = 0; i < cookieData.length; i++) {
+            console.log("Cookie   =>  loop enter" + cookieData.length);
             var qty = cookieData[i].split('=');
-            total += qty[1];
+            total += (qty[1]*1);
         }
         return total;
     }
+
 
     //add products list with respective quantity to cookie
     function updateCookie() {
@@ -141,7 +152,15 @@ Cart : <div id="cart" class=card-title></div>
                 str = str + "/" + productId + "=" + cartArray[productId]; // str  already has other products so add '/' first and then add productId=quantity
             }
         }
-        document.cookie = str; //output will be  => productId=quantity/productId=quantity/.....
+        cookie = str;//productId=quantity/productId=quantity/productId=quantity
+        document.cookie = "Cart=" + str; //Cart is cookie name which is use to delete cookie. Output will be  => Cart=productId=quantity/productId=quantity/productId=quantity/.....
+    }
+
+
+    function getCookie() {
+        var cookie = document.cookie;
+        if (cookie == "") return "";
+        return cookie.substring(5, cookie.length); // substring(startIndex,endIndex); we want to remove 'Cart=' so our startIndex will be 5 and endIndex is till end 
     }
 </script>
 
