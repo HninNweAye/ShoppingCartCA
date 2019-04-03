@@ -98,25 +98,29 @@ Cart : <div id="cart" class=card-title></div>
     }
 
     //search product in the cookie 
-    // if the product is already exist then find it's quantity
+    // if the product is already exist then find and return it's quantity 
     //eles return 0
     function getProductCount(productId) {
         var totalQty = 0;
-        if (document.cookie.indexOf(productId) == -1) return 0;
-        var cookieData = document.cookie.split('/');
+        if (document.cookie.indexOf(productId) == -1) return 0; // if productId doesn't  exist in cookie then  indexOf function will return -1 .
+        var cookieData = document.cookie.split('/'); // by splitting '/' then cookieData is array which will have each product in format(productId=quantity)
         for (var i = 0; i < cookieData.length; i++) {
-            var qty = cookieData[i].split('=');
+            var qty = cookieData[i].split('='); // then splity by '=' then qty array will have productId in index0 and quantity in index1
             if(qty[0] == productId)
             return qty[1];
         }
         return totalQty;
     }
+
+    //
     function setCartCount()
     {
         total = getTotalFromCookie();
         if (total == "undefined") { total = 0; }
         document.getElementById("cart").innerHTML = total;
     }
+
+    // get total quantity of all products in the cart from the cookie
     function getTotalFromCookie() {
         var total = "";
         var cookieData = document.cookie.split('/');
@@ -126,16 +130,18 @@ Cart : <div id="cart" class=card-title></div>
         }
         return total;
     }
+
+    //add products list with respective quantity to cookie
     function updateCookie() {
         var str = "";
-        for (var index in cartArray) {
-            if (str == "") {
-                str = index + "=" + cartArray[index];
+        for (var productId in cartArray) {
+            if (str == "") { // check is it first time add
+                str = productId + "=" + cartArray[productId]; 
             } else {
-                str = str+"/"+ index + "=" + cartArray[index];
+                str = str + "/" + productId + "=" + cartArray[productId]; // str  already has other products so add '/' first and then add productId=quantity
             }
         }
-        document.cookie = str;
+        document.cookie = str; //output will be  => productId=quantity/productId=quantity/.....
     }
 </script>
 
