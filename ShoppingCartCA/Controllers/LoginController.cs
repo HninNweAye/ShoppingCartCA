@@ -23,7 +23,8 @@ namespace ShoppingCartCA.Controllers
                 return View();
             }
 
-            return RedirectToAction("Contact", "Home");
+            string sessionId = SessionData.CreateSession(user.UserName);
+            return RedirectToAction("ProductList", "Gallery", new { sessionId });
             
         }
     }

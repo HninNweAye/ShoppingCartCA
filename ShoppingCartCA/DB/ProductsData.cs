@@ -21,7 +21,7 @@ namespace ShoppingCartCA.DB
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader != null && reader.Read())
                 {
-                   
+
                     Products product = new Products()
                     {
                         ProductID = (string)reader["ProductID"],
