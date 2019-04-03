@@ -48,10 +48,8 @@
 </style>
 
 @*Show Cart Count*@ 
-      <script>
-        document.cookie = 0;
-    </script>
-Cart : <div id="cart" class=card-title>0</div>
+
+Cart : <div id="cart" class=card-title></div>
   
 
 <table>
@@ -65,7 +63,7 @@ Cart : <div id="cart" class=card-title>0</div>
                 <b class="card-title">@product.Name</b>
                 <p class="card-text">@product.Description</p>
                 <button id="@product.ProductID" class="card-button" onclick="addToCart(@product.ProductID)">
-                    @product.Price - Add to Cart
+                    @product.Price$ - Add to Cart
                 </button>
             </div>
         </td>
@@ -87,12 +85,57 @@ Cart : <div id="cart" class=card-title>0</div>
 
 
 <script>
-    var cartArray= [] ;
+    setCartCount();
+    var cartArray= [];
+    var total;
+
     function addToCart(productId) {
-        var cartCount = document.cookie;
-        cartCount = cartCount * 1 + 1;
-        document.getElementById("cart").innerHTML = cartCount ;
-        document.cookie = cartCount;
+        total = total * 1 + 1;
+        document.getElementById("cart").innerHTML = total;
+        cartArray[productId] = getProductCount(productId) * 1 + 1; 
+        updateCookie();
+        console.log("Cookie   =>  " + document.cookie);
+    }
+
+    //search product in the cookie 
+    // if the product is already exist then find it's quantity
+    //eles return 0
+    function getProductCount(productId) {
+        var totalQty = 0;
+        if (document.cookie.indexOf(productId) == -1) return 0;
+        var cookieData = document.cookie.split('/');
+        for (var i = 0; i < cookieData.length; i++) {
+            var qty = cookieData[i].split('=');
+            if(qty[0] == productId)
+            return qty[1];
+        }
+        return totalQty;
+    }
+    function setCartCount()
+    {
+        total = getTotalFromCookie();
+        if (total == "undefined") { total = 0; }
+        document.getElementById("cart").innerHTML = total;
+    }
+    function getTotalFromCookie() {
+        var total = "";
+        var cookieData = document.cookie.split('/');
+        for (var i = 0; i < cookieData.length; i++) {
+            var qty = cookieData[i].split('=');
+            total += qty[1];
+        }
+        return total;
+    }
+    function updateCookie() {
+        var str = "";
+        for (var index in cartArray) {
+            if (str == "") {
+                str = index + "=" + cartArray[index];
+            } else {
+                str = str+"/"+ index + "=" + cartArray[index];
+            }
+        }
+        document.cookie = str;
     }
 </script>
 
