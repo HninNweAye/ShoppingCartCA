@@ -2,18 +2,105 @@
 @{
     ViewBag.Title = "Gallery";
     var products = (List<Products>)ViewData["productList"];
-
+    var count = 1;
 }
 
+<table>
 
     @foreach (var product in products)
     {
-        <p>ProductID : @product.ProductID</p>
-        <p>Name : @product.Name</p>
-        <p>Price : @product.Price</p>
-        <p>********</p>
+        /*        ele += '<td><div class="card" id="' + i + '" onClick = getId(this.id)><div class= "img"></div><b class = "card-title">.NET Charts</b><p class = "card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio qui possimus quibusdam!</p><input type="button" name="" value="$' + i + ' - Add to Cart" class="card-button"></div></td>';
+*/
+        
+        <td>
+            <div class="card" id="@product.ProductID" onclick="getId(this.id)">
+                <div class="img"><img src="@product.Image" /></div>
+                <b class="card-title">@product.Name</b>
+                <p class="card-text">@product.Description</p>
+                <input type="button" name="" value="@product.Price - Add to Cart" class="card-button">
+            </div>
+        </td>
+
+
+    }
+</table>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment</title>
+</head>
+<style>
+    body {
+        background: #dac5c5;
     }
 
+    .card {
+        background: #e6e6e6;
+        width: 270px;
+        height: 300px;
+        padding-top: 10px;
+        margin:10px 10px;/*top,bottom  left,right */ 
+    }
+
+    .img {
+        width: 230px;
+        height: 130px;
+        margin: auto;
+        background: black;
+    }
+
+    .card-title {
+        padding: 0 20%;
+    }
+
+    .card-text {
+        font-size: 12px;
+        padding-left: 10%;
+    }
+
+    .card-button {
+        margin: 0 14%;
+    }
+</style>
+<body>
+    <table id="card-collection"></table>
+</body>
+<script type="text/javascript">
+    var result = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    var v = document.createElement('tr');
+    document.getElementById('card-collection').appendChild(v);
+    var ele = "";
+    var appended = false;
+    int i = 0;
+    foreach(var product in @products) {
+        // var id = result[i]['id'];
+        ele += '<td><div class="card" id="' + i + '" onClick = getId(this.id)><div class= "img"></div><b class = "card-title">.NET Charts</b><p class = "card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio qui possimus quibusdam!</p><input type="button" name="" value="$' + i + ' - Add to Cart" class="card-button"></div></td>';
+
+        if (i % 3 == 0 && i !== result.length) {
+
+            var v = document.createElement('tr');
+            document.getElementById('card-collection').appendChild(v);
+            v.innerHTML = ele;
+            var ele = "";
+        }
+        if (i == result.length) {
+            var v = document.createElement('tr');
+            document.getElementById('card-collection').appendChild(v);
+            v.innerHTML = ele;
+            var ele = "";
+        }
+        i++;
+    }
+    function addCardRow(ele) {
+
+    }
+    function getId(item_id) {
+        console.log(item_id);
+    }
+
+    // v.innerHTML ='<td><div class="card" id="'+ 2 +'"><div class= "img"></div><b class = "card-title">.NET Charts</b><p class = "card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio qui possimus quibusdam!</p><input type="button" name="" value="$99 - Add to Cart" class="card-button"></div></td><td><div class="card"><div class= "img"></div><b class = "card-title">.NET Charts</b><p class = "card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio qui possimus quibusdam!</p><input type="button" name="" value="$99 - Add to Cart" class="card-button"></div></td>';
 
 
-
+</script>
+</html>

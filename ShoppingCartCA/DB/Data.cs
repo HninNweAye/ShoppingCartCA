@@ -8,7 +8,7 @@ namespace ShoppingCartCA.DB
     public class Data
     {
         // Change the SERVER Name to what is shown on your SQL Server Management Studio
-        public static string connectionString = "Server=akzin;" +
+        public static string connectionString = "Server=HNO;" +
                 "Database=ShoppingCart; Integrated Security=true";
     }
 }
