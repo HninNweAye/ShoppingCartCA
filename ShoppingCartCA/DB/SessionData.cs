@@ -28,7 +28,7 @@ namespace ShoppingCartCA.DB
             {
                 conn.Open();
                 string sql = @"UPDATE Users SET SessionID ='" 
-                + sessionID + "'" + "Where UserName ='" + username+"'";
+                + sessionID + "'" + " Where UserName ='" + username+"'";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.ExecuteNonQuery();
             }
