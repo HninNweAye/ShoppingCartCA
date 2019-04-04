@@ -126,10 +126,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\GalleryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="DB\Data.cs" />
+    <Compile Include="DB\PurchaseData.cs" />
     <Compile Include="DB\SessionData.cs" />
     <Compile Include="DB\UsersData.cs" />
     <Compile Include="DB\ProductsData.cs" />
@@ -138,10 +141,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\CartCookie.cs" />
     <Compile Include="Models\Products.cs" />
     <Compile Include="Models\PurchaseHistory.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\CookieUtil.cs" />
+    <Compile Include="Util\TimeStamp.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -184,6 +190,8 @@
     <Content Include="Views\Gallery\ProductList.cshtml" />
     <Content Include="Views\Login\LoginUser.cshtml" />
     <Content Include="Views\Gallery\SearchResult.cshtml" />
+    <Content Include="Views\Purchase\MyPurchase.cshtml" />
+    <Content Include="Views\Cart\ViewCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

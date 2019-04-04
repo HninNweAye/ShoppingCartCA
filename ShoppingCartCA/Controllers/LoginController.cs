@@ -23,7 +23,7 @@ namespace ShoppingCartCA.Controllers
                 return View();
             }
 
-            string sessionId = SessionData.CreateSession(user.UserName);
+            string sessionId = SessionData.CreateSession(Username);
             return RedirectToAction("ProductList", "Gallery", new { sessionId });
             
         }

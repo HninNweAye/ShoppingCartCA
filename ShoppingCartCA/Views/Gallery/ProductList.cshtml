@@ -47,47 +47,46 @@
     </style>
 
 
-         
-        <span>Cart :</span>
-        <span id="cart"></span>
-        <input type="text" name="Search" id="search"  style="width : 500px" onkeyup="if (event.keyCode == 13) search(); else if (event.keyCode == 8) resetSearch();" />
-   
-   
-        <div id="productList">
 
-            <table>
-                @{
-                    @:<tr>
-                        foreach (var product in products)
+    <span>Cart :</span>
+    <span id="cart"></span>
+    <input type="text" name="Search" id="search" style="width : 500px" onkeyup="if (event.keyCode == 13) search(); else if (event.keyCode == 8) resetSearch();" />
+
+    <div id="productList">
+
+        <table>
+            @{
+                @:<tr>
+                    foreach (var product in products)
+                    {
+                        <td>
+                            <div class="card" id="@product.ProductID">
+                                <div class="img"><img src="~/Images/@product.Image" /></div>
+                                <b class="card-title">@product.Name</b>
+                                <p class="card-text">@product.Description</p>
+                                <button id="@product.ProductID" class="card-button" onclick="addToCart(@product.ProductID)">
+                                    @product.Price$ - Add to Cart
+                                </button>
+                            </div>
+                        </td>
+
+                        if (columnCount % 3 == 0)
                         {
-                            <td>
-                                <div class="card" id="@product.ProductID">
-                                    <div class="img"><img src="~/Images/@product.Image" /></div>
-                                    <b class="card-title">@product.Name</b>
-                                    <p class="card-text">@product.Description</p>
-                                    <button id="@product.ProductID" class="card-button" onclick="addToCart(@product.ProductID)">
-                                        @product.Price$ - Add to Cart
-                                    </button>
-                                </div>
-                            </td>
-
-                            if (columnCount % 3 == 0)
-                            {
-                            @:</tr>
-                            @: <tr>
-                            }
-                            if (columnCount == listSize)
-                            {
-                            @:</tr>
+                        @:</tr>
+                        @: <tr>
                         }
-
-                        columnCount++;
+                        if (columnCount == listSize)
+                        {
+                        @:</tr>
                     }
-                    @:</tr>
-                }
-            </table>
 
-        </div>
+                    columnCount++;
+                }
+                @:</tr>
+            }
+        </table>
+
+    </div>
 
     <script>
         setCartCount();
@@ -120,7 +119,7 @@
 
             total = total * 1 + 1;
             document.getElementById("cart").innerHTML = total;
-            document.cookie = productId + "=" + getProductCount(productId)+";path=/"; // update cookie data
+            document.cookie = productId + "=" + getProductCount(productId) + ";path=/"; // update cookie data
         }
 
 

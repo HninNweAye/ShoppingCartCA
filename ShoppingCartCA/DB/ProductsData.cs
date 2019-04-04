@@ -37,44 +37,38 @@ namespace ShoppingCartCA.DB
             return productList;
 
         }
-    }
-}
-
-    /*
-       public static List<Class> GetClassesByLecturerId(int LecturerId)
+ 
+        public static List<Cart> GetProductDetails(List<CartCookie> cartCookieList)
         {
-            List<Class> classes = new List<Class>();
+        List<Cart> cartList = new List<Cart>();
 
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(Data.connectionString))
             {
                 conn.Open();
+                foreach (CartCookie cartCookie in cartCookieList) {
 
-                string sql = @"SELECT Class.Id as ClassId, Course.Id as CourseId, 
-                    Course.Name, Class.Startdate, Class.Enddate 
-                        FROM Class, Course, Lecturer
-                            WHERE Class.LecturerId = " + LecturerId +
-                                @" AND Class.LecturerId = Lecturer.Id" +
-                                @" AND Class.CourseId = Course.Id";
-                SqlCommand cmd = new SqlCommand(sql, conn);
-
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    Class _class = new Class()
+                    string sql = @"SELECT Name,Price,Description,ImagePath FROM Products WHERE ProductID = "+cartCookie.ProductId;
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader != null && reader.Read())
                     {
-                        Id = (int)reader["ClassId"],
-                        CourseId = (int)reader["CourseId"],
-                        CourseName = (string)reader["Name"],
-                        StartDate = (long)reader["StartDate"],
-                        EndDate = (long)reader["EndDate"]
-                    };
 
-                    classes.Add(_class);
+                        Cart cart = new Cart()
+                        {
+                            ProductID = cartCookie.ProductId,
+                            Quantity = cartCookie.Quantity,
+                            Name = (string)reader["Name"],
+                            Price = (decimal)reader["Price"],
+                            Description = (string)reader["Description"],
+                            Image = (string)reader["ImagePath"]
+                        };
+                        cartList.Add(cart);
+                    }
+                    reader.Close();
                 }
             }
+            return cartList;
 
-            return classes;
         }
     }
-     */
-    //}
+}

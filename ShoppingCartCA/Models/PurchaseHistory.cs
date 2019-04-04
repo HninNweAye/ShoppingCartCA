@@ -5,14 +5,14 @@ using System.Web;
 
 namespace ShoppingCartCA.Models
 {
-    public class PurchaseHistory
+    public class PurchaseHistory : Products
     {
 
-        public string PurchaseID { get; set; }
-        public string UserName { get; set; }
-        public string ProductName { get; set; }
-        public string ActivationCode { get; set; }
+      //  public string PurchaseID { get; set; }
+     //   public string UserName { get; set; }
+        public List<string> ActivationCode { get; set; }
         public long PurchasedDate { get; set; }
+        public int Quantity { get; set; }
 
     }
 }

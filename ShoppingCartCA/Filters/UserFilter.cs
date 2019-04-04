@@ -20,7 +20,7 @@ namespace ShoppingCartCA.Filters
                     new RouteValueDictionary
                     {
                         { "controller", "Login" },
-                        { "action", "Index" }
+                        { "action", "LoginUser" }
                     }
                 );
             }

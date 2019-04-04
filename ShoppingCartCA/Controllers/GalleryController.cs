@@ -22,7 +22,6 @@ namespace ShoppingCartCA.Controllers
         {
             List<Products> products = ProductsData.GetProductList(search);
             ViewData["listSize"] = products.Count;
-     
             return PartialView(products);
         }
     }

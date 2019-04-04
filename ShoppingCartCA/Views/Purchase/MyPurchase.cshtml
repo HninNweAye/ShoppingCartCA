@@ -1,0 +1,22 @@
+﻿@using ShoppingCartCA.Models
+@using ShoppingCartCA.Util
+@{
+    ViewBag.Title = "Index";
+    var purchasedList = (List<PurchaseHistory>)ViewData["purchasedList"];
+}
+
+<h2>Index</h2>
+@foreach (var purchase in purchasedList)
+{
+    var date = Timestamp.dateFromTimestamp(purchase.PurchasedDate);
+    <div> Name : @purchase.Name</div>
+    <div> Date:  @date</div>
+    <div>Price: @purchase.Price</div>
+    <div>Quantity : @purchase.Quantity</div>
+    <div>ActivationCode : @purchase.ActivationCode[0] ,
+    @if (@purchase.ActivationCode.Count > 1)
+    { @purchase.ActivationCode[1] } </div>
+
+    <div>**************************************************</div>
+}
+

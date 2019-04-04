@@ -40,8 +40,8 @@ namespace ShoppingCartCA.DB
             {
                 conn.Open();
 
-                string q = @"SELECT  User.Firstname, User.Lastname from
-                        Users WHERE.SessionId = '" + sessionId + "'";
+                string q = @"SELECT  Firstname,Lastname from
+                        Users WHERE SessionId = '" + sessionId + "'";
 
                 SqlCommand cmd = new SqlCommand(q, conn);
                 SqlDataReader reader = cmd.ExecuteReader();

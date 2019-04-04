@@ -1,0 +1,15 @@
+﻿@using ShoppingCartCA.Models
+@{
+    ViewBag.Title = "ViewCart";
+    var CartList = (List<Cart>)ViewData["cartList"];
+}
+
+<h2>ViewCart</h2>
+@foreach (var cart in CartList)
+{
+    <div> Name : @cart.Name</div>
+    <div>Price: @cart.Price</div>
+    <div>Quantity : @cart.Quantity</div>
+    <div>Description : @cart.Description</div>
+    <div>**************************************************</div>
+}
