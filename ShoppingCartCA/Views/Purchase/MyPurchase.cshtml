@@ -6,6 +6,92 @@
 }
 
 <h2>Index</h2>
+
+<style>
+    body {
+        background: #dac5c5;
+    }
+
+    .card {
+        border: dashed;
+        position: relative;
+        background: #e6e6e6;
+        width: 370px;
+        height: 520px;
+        padding-top: 10px;
+        padding-right: 2%;
+        margin: 10px 10px; /*top,bottom  left,right */
+    }
+
+    .img {
+        width: 270px;
+        height: 270px;
+        margin: auto;
+        background: black;
+    }
+
+    .card-title {
+        padding-left: 20%;
+        margin: auto;
+    }
+
+    .card-text {
+        max-height: 70px;
+        font-size: 13px;
+        padding-left: 10%;
+        overflow-y: hidden;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+
+    .card-button {
+        border: solid;
+        position: absolute;
+        bottom: 45px;
+        right: 120px;
+    }
+</style>
+<p><b>My Purchases - <a href="@Url.Action("Purchases")"> Home</a><b>|</b> <a href="@Url.Action("LogOut", "Login")">Logout</a></p>
+
+
+
+<h2>My Purchases:</h2>
+ 
+<table style="height: 54px;" width="430">
+    @foreach (var purchase in purchasedList)
+    {
+        var date = Timestamp.dateFromTimestamp(purchase.PurchasedDate);
+
+        <tbody>
+            <tr>
+                <td style="width: 170px;">
+                    <p><img src="~/Images/@purchase.Image" alt="" width="150" height="200" /></p>
+                    <p><button type="submit">Download!</button></p>
+                </td>
+                <td style="width: 250px;">
+                    <p>Purchase On     : @date </p>
+                    <p>Quantity        : @purchase.Quantity</p>
+                    @if (purchase.ActivationCode.Count == 1)
+                    {
+                        <p>Activation Code : @purchase.ActivationCode[0]</p>
+                    }
+                    else
+                    {
+                        <p> Activation Code : 
+                        <select>
+                            @foreach (var code in @purchase.ActivationCode)
+                            {
+                                <option value="@code">@code</option>
+                            }
+                        </select>
+                        </p>
+                    }
+
+                </td>
+            </tr>
+        </tbody>
+    }
+</table>
+
 @foreach (var purchase in purchasedList)
 {
     var date = Timestamp.dateFromTimestamp(purchase.PurchasedDate);
@@ -13,9 +99,11 @@
     <div> Date:  @date</div>
     <div>Price: @purchase.Price</div>
     <div>Quantity : @purchase.Quantity</div>
-    <div>ActivationCode : @purchase.ActivationCode[0] ,
-    @if (@purchase.ActivationCode.Count > 1)
-    { @purchase.ActivationCode[1] } </div>
+    <div>
+        ActivationCode : @purchase.ActivationCode[0] ,
+        @if (@purchase.ActivationCode.Count > 1)
+        {@purchase.ActivationCode[1]}
+    </div>
 
     <div>**************************************************</div>
 }
