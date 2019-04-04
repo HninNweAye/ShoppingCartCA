@@ -27,7 +27,7 @@ namespace ShoppingCartCA.DB
                     {
                         ProductID = (string)reader["ProductID"],
                         Name = (string)reader["Name"],
-                        Price = (decimal)reader["Price"],
+                        Price = (double)reader["Price"],
                         Description = (string)reader["Description"],
                         Image = (string)reader["ImagePath"]
                     };
@@ -58,7 +58,7 @@ namespace ShoppingCartCA.DB
                             ProductID = cartCookie.ProductId,
                             Quantity = cartCookie.Quantity,
                             Name = (string)reader["Name"],
-                            Price = (decimal)reader["Price"],
+                            Price = (double)reader["Price"],
                             Description = (string)reader["Description"],
                             Image = (string)reader["ImagePath"]
                         };

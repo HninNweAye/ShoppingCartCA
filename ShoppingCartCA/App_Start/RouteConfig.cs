@@ -16,7 +16,7 @@ namespace ShoppingCartCA
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Purchase", action = "MyPurchase", id = UrlParameter.Optional }
+                defaults: new { controller = "Gallery", action = "ProductList", id = UrlParameter.Optional }
             );
         }
     }

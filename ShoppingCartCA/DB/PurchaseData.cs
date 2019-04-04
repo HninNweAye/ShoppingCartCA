@@ -46,7 +46,7 @@ namespace ShoppingCartCA.DB
                          purchase = new PurchaseHistory
                         {
                             Name = (string)reader["Name"],
-                            Price = (decimal)reader["Price"],
+                            Price = (double)reader["Price"],
                             Description = (string)reader["Description"],
                             Image = (string)reader["ImagePath"],
                             PurchasedDate = (long)reader["Date"],

@@ -2,14 +2,58 @@
 @{
     ViewBag.Title = "ViewCart";
     var CartList = (List<Cart>)ViewData["cartList"];
+    var totalPrice = 0.0;
+    foreach (var cart in CartList) {
+        totalPrice += (cart.Price * cart.Quantity * 1);
+    }
 }
 
-<h2>ViewCart</h2>
+Total : <p id="total" style="font-size : 40px "> @totalPrice</p>
 @foreach (var cart in CartList)
 {
     <div> Name : @cart.Name</div>
     <div>Price: @cart.Price</div>
-    <div>Quantity : @cart.Quantity</div>
+    <div>Quantity :  <input type="number" value="@cart.Quantity" id="@cart.ProductID" name="quantity" min="1" max="20" oninput="updateCartAndTotal(@cart.ProductID,@cart.Price)"></div>
     <div>Description : @cart.Description</div>
     <div>**************************************************</div>
 }
+
+<script>
+    1
+    var total = @totalPrice;
+    function updateCartAndTotal(productId, price) {
+        
+        console.log(document.getElementById(productId).value);
+        var quantity = document.getElementById(productId).value;
+
+        var totalView = document.getElementById("total");
+        var originalQty = getQuantityFromCookie(productId);
+         
+        if (quantity > originalQty) {
+            console.log("Increase currentTotal " + total + " Price " + price);
+            total += price
+            totalView.innerHTML = total;
+        } else {
+            total -= price
+            console.log("Decrease currentTotal " + total + " Price " + price);
+            totalView.innerHTML = total ;
+        }
+
+ 
+        document.cookie = productId + "=" + quantity + ";path=/"; // update cookie data
+
+    }
+     function getQuantityFromCookie(productID) {
+        var value;
+        cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            value = cookies[i].split('=');
+
+            if (value[0].trim() == productID) {
+                return (value[1]);
+            }
+        }
+        return 0;
+    }
+
+</script>
