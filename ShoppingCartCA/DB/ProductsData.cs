@@ -9,14 +9,15 @@ namespace ShoppingCartCA.DB
 {
     public class ProductsData : Data
     {
-        public static List<Products> GetProductList()
+        public static List<Products> GetProductList(string searchKeyword)
         {
             List<Products> productList = new List<Products>();
 
             using (SqlConnection conn = new SqlConnection(Data.connectionString))
             {
                 conn.Open();
-                string sql = @"SELECT ProductID,Name,Price,Description,ImagePath From Products";
+                string sql = @"SELECT ProductID,Name,Price,Description,ImagePath FROM Products WHERE Description like '%"
+                                            +searchKeyword+"%'";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader != null && reader.Read())

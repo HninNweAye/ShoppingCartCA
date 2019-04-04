@@ -1,0 +1,81 @@
+﻿@model IEnumerable<ShoppingCartCA.Models.Products>
+
+@{
+    ViewBag.Title = "SearchResult";
+    var listSize = (int)ViewData["listSize"];
+    var columnCount = 1;
+
+}
+
+<h2>SearchResult</h2>
+<style>
+    body {
+        background: #dac5c5;
+    }
+
+    .card {
+        position: relative;
+        background: #e6e6e6;
+        width: 270px;
+        height: 300px;
+        padding-top: 10px;
+        margin: 10px 10px; /*top,bottom  left,right */
+    }
+
+    .img {
+        width: 230px;
+        height: 130px;
+        margin: auto;
+        background: black;
+    }
+
+    .card-title {
+        padding: 0 20%;
+    }
+
+    .card-text {
+        max-height: 70px;
+        font-size: 12px;
+        padding-left: 10%;
+        overflow-y: hidden;
+    }
+
+    .card-button {
+        position: absolute;
+        bottom: 10px;
+        left: 80px;
+    }
+</style>
+
+<table>
+    @{
+        @:<tr>
+            foreach (var product in Model)
+            {
+                <td>
+                    <div class="card" id="@product.ProductID">
+                        <div class="img"><img src="~/Images/@product.Image" /></div>
+                        <b class="card-title">@product.Name</b>
+                        <p class="card-text">@product.Description</p>
+                        <button id="@product.ProductID" class="card-button" onclick="addToCart(@product.ProductID)">
+                            @product.Price$ - Add to Cart
+                        </button>
+                    </div>
+                </td>
+
+                if (columnCount % 3 == 0)
+                {
+                @:</tr>
+                @: <tr>
+                }
+                if (columnCount == listSize)
+                {
+                @:</tr>
+            }
+
+            columnCount++;
+        }
+        @:</tr>
+    }
+</table>
+

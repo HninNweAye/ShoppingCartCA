@@ -1,4 +1,5 @@
 ﻿using ShoppingCartCA.DB;
+using ShoppingCartCA.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,13 +14,16 @@ namespace ShoppingCartCA.Controllers
         // GET: Gallery
         public ActionResult ProductList()
         {
-            ViewData["productList"] = ProductsData.GetProductList();
-            Debug.WriteLine(ViewData["productList"]);
+            ViewData["productList"] = ProductsData.GetProductList("");
+       //     ViewData["search"] = search;
             return View();
         }
-        public ActionResult AddToCard(string ProductID) {
-
-            return View("ProductList");
+        public PartialViewResult SearchResult(string search)
+        {
+            List<Products> products = ProductsData.GetProductList(search);
+            ViewData["listSize"] = products.Count;
+     
+            return PartialView(products);
         }
     }
 }

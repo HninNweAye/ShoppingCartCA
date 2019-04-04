@@ -3,166 +3,162 @@
     ViewBag.Title = "Gallery";
     var products = (List<Products>)ViewData["productList"];
     var listSize = products.Count;
-    var count = 1;
+    var columnCount = 1;
 }
 <html>
 <body>
-<style>
-    body {
-        background: #dac5c5;
-    }
-
-    .card {
-        position: relative;
-        background: #e6e6e6;
-        width: 270px;
-        height: 300px;
-        padding-top: 10px;
-        margin: 10px 10px; /*top,bottom  left,right */
-    }
-
-    .img {
-        width: 230px;
-        height: 130px;
-        margin: auto;
-        background: black;
-    }
-
-    .card-title {
-        padding: 0 20%;
-    }
-
-    .card-text {
-        max-height: 70px;
-        font-size: 12px;
-        padding-left: 10%;
-        overflow-y: hidden;
-    }
-
-    .card-button {
-        position: absolute;
-        bottom: 10px;
-        left: 80px;
-    }
-</style>
-
-@*Show Cart Count*@ 
-
-Cart : <div id="cart" class=card-title></div>
-  
-
-<table>
-    @{
-        @:<tr>
-            foreach (var product in products)
-            {
-        <td>
-            <div class="card" id="@product.ProductID">
-                <div class="img"><img src="~/Images/@product.Image" /></div>
-                <b class="card-title">@product.Name</b>
-                <p class="card-text">@product.Description</p>
-                <button id="@product.ProductID" class="card-button" onclick="addToCart(@product.ProductID)">
-                    @product.Price$ - Add to Cart
-                </button>
-            </div>
-        </td>
-
-        if (count % 3 == 0)
-        {
-        @:</tr>
-        @: <tr>
+    <style>
+        body {
+            background: #dac5c5;
         }
-            if (count == listSize) {
-                @:</tr>
-            }
 
-            count++;
+        .card {
+            position: relative;
+            background: #e6e6e6;
+            width: 270px;
+            height: 300px;
+            padding-top: 10px;
+            margin: 10px 10px; /*top,bottom  left,right */
         }
-@:</tr>
-    }
-</table>
 
-
-<script>
-    setCartCount();
-    var cartArray= [];
-    var total;
-    var cookie;// variable for storing cookie data only without cookie name
-
-
-    function addToCart(productId) {
-    
-        total = total * 1 + 1;
-        document.getElementById("cart").innerHTML = total;
-        cartArray[productId] = getProductCount(productId) * 1 + 1; 
-        updateCookie();
-        console.log("Cookie   =>  " + cookie);
-    }
-
-
-    //search product in the cookie 
-    // if the product is already exist then find and return it's quantity 
-    //eles return 0
-    function getProductCount(productId) {
-        var totalQty = 0;
-        if (document.cookie.indexOf(productId) == -1) return 0; // if productId doesn't  exist in cookie then  indexOf function will return -1 .
-        var cookieData = cookie.split('/'); // by splitting '/' then cookieData is array which will have each product in format(productId=quantity)
-        for (var i = 0; i < cookieData.length; i++) {
-            var qty = cookieData[i].split('='); // then splity by '=' then qty array will have productId in index0 and quantity in index1
-            if(qty[0] == productId)
-            return qty[1];
+        .img {
+            width: 230px;
+            height: 130px;
+            margin: auto;
+            background: black;
         }
-        return totalQty;
-    }
 
-
-    //get cookie data only without cookie name and find total quantity of all products in the cart from the cookie
-    function setCartCount()
-    {
-        cookie = getCookie() || "";// just removing cookie name("Cart=") from cookie
-        total = getTotalFromCookie();
-        if (total == "undefined") { total = 0; }
-        document.getElementById("cart").innerHTML = total;
-    }
-
-
-
-    // get total quantity of all products in the cart from the cookie
-    function getTotalFromCookie() {
-        var total = 0;
-        if (cookie === "") return 0;
-        var cookieData = cookie.split('/');
-        console.log("CookieData   =>  " + cookieData);
-        for (var i = 0; i < cookieData.length; i++) {
-            console.log("Cookie   =>  loop enter" + cookieData.length);
-            var qty = cookieData[i].split('=');
-            total += (qty[1]*1);
+        .card-title {
+            padding: 0 20%;
         }
-        return total;
-    }
+
+        .card-text {
+            max-height: 70px;
+            font-size: 12px;
+            padding-left: 10%;
+            overflow-y: hidden;
+        }
+
+        .card-button {
+            position: absolute;
+            bottom: 10px;
+            left: 80px;
+        }
+    </style>
 
 
-    //add products list with respective quantity to cookie
-    function updateCookie() {
-        var str = "";
-        for (var productId in cartArray) {
-            if (str == "") { // check is it first time add
-                str = productId + "=" + cartArray[productId]; 
-            } else {
-                str = str + "/" + productId + "=" + cartArray[productId]; // str  already has other products so add '/' first and then add productId=quantity
+         
+        <span>Cart :</span>
+        <span id="cart"></span>
+        <input type="text" name="Search" id="search"  style="width : 500px" onkeyup="if (event.keyCode == 13) search(); else if (event.keyCode == 8) resetSearch();" />
+   
+   
+        <div id="productList">
+
+            <table>
+                @{
+                    @:<tr>
+                        foreach (var product in products)
+                        {
+                            <td>
+                                <div class="card" id="@product.ProductID">
+                                    <div class="img"><img src="~/Images/@product.Image" /></div>
+                                    <b class="card-title">@product.Name</b>
+                                    <p class="card-text">@product.Description</p>
+                                    <button id="@product.ProductID" class="card-button" onclick="addToCart(@product.ProductID)">
+                                        @product.Price$ - Add to Cart
+                                    </button>
+                                </div>
+                            </td>
+
+                            if (columnCount % 3 == 0)
+                            {
+                            @:</tr>
+                            @: <tr>
+                            }
+                            if (columnCount == listSize)
+                            {
+                            @:</tr>
+                        }
+
+                        columnCount++;
+                    }
+                    @:</tr>
+                }
+            </table>
+
+        </div>
+
+    <script>
+        setCartCount();
+        var total;
+        var cookie;// variable for storing cookie data
+        var searchTextBox = document.getElementById('search');
+        var sessionId = ""
+
+        function search() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("productList").innerHTML = this.responseText;
+                }
+            };
+            xhttp.open("GET", "SearchResult?search=" + searchTextBox.value + "&sessionId=" + sessionId, true);//actionName
+            xhttp.send();
+        }
+
+        function resetSearch() {
+            if (searchTextBox.value == "") {
+                search();
             }
         }
-        cookie = str;//productId=quantity/productId=quantity/productId=quantity
-        document.cookie = "Cart=" + str; //Cart is cookie name which is use to delete cookie. Output will be  => Cart=productId=quantity/productId=quantity/productId=quantity/.....
-    }
 
 
-    function getCookie() {
-        var cookie = document.cookie;
-        if (cookie == "") return "";
-        return cookie.substring(5, cookie.length); // substring(startIndex,endIndex); we want to remove 'Cart=' so our startIndex will be 5 and endIndex is till end 
-    }
-</script>
+
+
+        function addToCart(productId) {
+
+            total = total * 1 + 1;
+            document.getElementById("cart").innerHTML = total;
+            document.cookie = productId + "=" + getProductCount(productId); // update cookie data
+        }
+
+
+        function setCartCount() {
+            cookie = document.cookie;
+            total = getTotalFromCookie();
+            if (total == "undefined") { total = 0; }
+            document.getElementById("cart").innerHTML = total; // show cart total count on UI
+        }
+
+
+        // get total quantity of all products in the cart from the cookie
+        function getTotalFromCookie() {
+            var total = 0;
+            if (cookie === "") return 0;
+            var cookieData = cookie.split(';');
+            for (var i = 0; i < cookieData.length; i++) {
+                var qty = cookieData[i].split('='); //productId=quantity splity by '=' so in qty will have qty[0]=productId and qty[1]=quantity
+                total += (qty[1] * 1);
+            }
+            return total;
+        }
+
+
+        function getProductCount(productID) {
+            var value;
+            cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                value = cookies[i].split('=');
+
+                if (value[0].trim() == productID) {
+                    return (value[1] * 1 + 1);
+                }
+            }
+            return 1;
+        }
+
+    </script>
 
 </body>
 </html>
