@@ -120,7 +120,7 @@
 
             total = total * 1 + 1;
             document.getElementById("cart").innerHTML = total;
-            document.cookie = productId + "=" + getProductCount(productId); // update cookie data
+            document.cookie = productId + "=" + getProductCount(productId)+";path=/"; // update cookie data
         }
 
 

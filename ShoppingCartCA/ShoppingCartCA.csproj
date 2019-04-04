@@ -133,6 +133,7 @@
     <Compile Include="DB\SessionData.cs" />
     <Compile Include="DB\UsersData.cs" />
     <Compile Include="DB\ProductsData.cs" />
+    <Compile Include="Filters\UserFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
