@@ -11,7 +11,7 @@ namespace ShoppingCartCA.Models
       //  public string PurchaseID { get; set; }
      //   public string UserName { get; set; }
         public List<string> ActivationCode { get; set; }
-        public long PurchasedDate { get; set; }
+        public DateTime PurchasedDate { get; set; }
         public int Quantity { get; set; }
 
     }

@@ -40,7 +40,7 @@ namespace ShoppingCartCA.DB
             {
                 conn.Open();
 
-                string q = @"SELECT  Firstname,Lastname from
+                string q = @"SELECT  UserName,Firstname,Lastname from
                         Users WHERE SessionId = '" + sessionId + "'";
 
                 SqlCommand cmd = new SqlCommand(q, conn);
@@ -49,6 +49,7 @@ namespace ShoppingCartCA.DB
                 {
                     user = new User
                     {
+                        UserName = (string)reader["UserName"],
                         FirstName = (string)reader["FirstName"],
                         LastName = (string)reader["LastName"]
                     };

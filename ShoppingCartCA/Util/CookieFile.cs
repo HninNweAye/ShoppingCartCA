@@ -6,7 +6,7 @@ using ShoppingCartCA.Models;
 
 namespace ShoppingCartCA.Util
 {
-    public class CookieUtil
+    public class CookieFile
     {
         public static List<CartCookie>  GetCartCookie(HttpCookieCollection cookieCollection) {
             List<CartCookie> cartCookieList = new List<CartCookie>();
@@ -26,5 +26,7 @@ namespace ShoppingCartCA.Util
             }
             return cartCookieList; 
         }
+     
+
     }
 }

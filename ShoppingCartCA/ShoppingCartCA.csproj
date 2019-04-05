@@ -146,7 +146,7 @@
     <Compile Include="Models\PurchaseHistory.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Util\CookieUtil.cs" />
+    <Compile Include="Util\CookieFile.cs" />
     <Compile Include="Util\TimeStamp.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +202,7 @@
     <Content Include="Views\Gallery\SearchResult.cshtml" />
     <Content Include="Views\Purchase\MyPurchase.cshtml" />
     <Content Include="Views\Cart\ViewCart.cshtml" />
+    <Content Include="Views\Cart\CheckOut.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

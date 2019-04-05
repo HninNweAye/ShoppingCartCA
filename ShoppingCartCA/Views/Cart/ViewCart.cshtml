@@ -1,45 +1,49 @@
 ﻿@using ShoppingCartCA.Models
 @{
     ViewBag.Title = "ViewCart";
+    var sessionId = (string)ViewData["sessionId"];
     var CartList = (List<Cart>)ViewData["cartList"];
     var totalPrice = 0.0;
-    foreach (var cart in CartList) {
+    foreach (var cart in CartList)
+    {
         totalPrice += (cart.Price * cart.Quantity * 1);
     }
 }
 
 Total : <p id="total" style="font-size : 40px "> @totalPrice</p>
+>@Html.ActionLink("CheckOut", "CheckOut", "Cart",
+                  new { userName = "akzin", sessionId = @sessionId }, null )
 @foreach (var cart in CartList)
 {
     <div> Name : @cart.Name</div>
     <div>Price: @cart.Price</div>
-    <div>Quantity :  <input type="number" value="@cart.Quantity" id="@cart.ProductID" name="quantity" min="1" max="20" oninput="updateCartAndTotal(@cart.ProductID,@cart.Price)"></div>
+    <div>Quantity :  <input type="number" value="@cart.Quantity" id="@cart.ProductID" name="quantity" min="0" max="20" oninput="updateCartAndTotal(@cart.ProductID,@cart.Price)"></div>
     <div>Description : @cart.Description</div>
     <div>**************************************************</div>
 }
 
 <script>
-    1
+
     var total = @totalPrice;
     function updateCartAndTotal(productId, price) {
-        
+
         console.log(document.getElementById(productId).value);
         var quantity = document.getElementById(productId).value;
 
         var totalView = document.getElementById("total");
         var originalQty = getQuantityFromCookie(productId);
-         
+
         if (quantity > originalQty) {
             console.log("Increase currentTotal " + total + " Price " + price);
             total += price
             totalView.innerHTML = total;
-        } else {
+        } else if (quantity < originalQty) {
             total -= price
             console.log("Decrease currentTotal " + total + " Price " + price);
             totalView.innerHTML = total ;
         }
 
- 
+
         document.cookie = productId + "=" + quantity + ";path=/"; // update cookie data
 
     }

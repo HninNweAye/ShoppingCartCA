@@ -11,11 +11,12 @@ namespace ShoppingCartCA.Controllers
     public class PurchaseController : Controller
     {
         // GET: Purchase
-        public ActionResult MyPurchase(string username,string sessionId)
+        public ActionResult MyPurchase(string sessionId)
         {
             User user = UsersData.GetUserBySessionId("abc123");
             if (user == null) RedirectToAction("Login", "LoginUser");
-            ViewData["purchasedList"] = PurchaseData.GetPurchasedList("akzin");
+            ViewData["purchasedList"] = PurchaseData.GetPurchasedList(user.UserName);
+            ViewData["sessionId"] = sessionId;
             return View();
         }
     }

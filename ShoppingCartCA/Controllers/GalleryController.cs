@@ -12,10 +12,12 @@ namespace ShoppingCartCA.Controllers
     public class GalleryController : Controller
     {
         // GET: Gallery
-        public ActionResult ProductList()
+        public ActionResult ProductList(string sessionId)
         {
             ViewData["productList"] = ProductsData.GetProductList("");
-       //     ViewData["search"] = search;
+            ViewData["sessionId"] = sessionId;
+           
+
             return View();
         }
         public PartialViewResult SearchResult(string search)

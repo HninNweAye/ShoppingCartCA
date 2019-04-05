@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -14,13 +15,24 @@ namespace ShoppingCartCA.Util
 
         public static long unixTimestamp()
         {
-            return DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            return DateTimeOffset.UtcNow.ToUnixTimeSeconds();      
         }
 
+        public static long GetDate() {
+            DateTime date= DateTime.Today.Date;
+            return date.Second;
+        }
+     
         public static string dateFromTimestamp(long timestamp)
         {
             DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             dateTime = dateTime.AddSeconds(timestamp).ToLocalTime();
+
+            return dateTime.Day + " " + monthNames[dateTime.Month] + " " + dateTime.Year;
+        }
+        public static string dateFromDateTime(DateTime dateTime) {
+                       
+            Debug.WriteLine(dateTime.ToString("dd/MM/yyyy"));
 
             return dateTime.Day + " " + monthNames[dateTime.Month] + " " + dateTime.Year;
         }

@@ -59,7 +59,7 @@
 <table style="height: 54px;" width="430">
     @foreach (var purchase in purchasedList)
     {
-        var date = Timestamp.dateFromTimestamp(purchase.PurchasedDate);
+        var date = Timestamp.dateFromDateTime(purchase.PurchasedDate);
 
         <tbody>
             <tr>
@@ -91,20 +91,5 @@
         </tbody>
     }
 </table>
-
-@foreach (var purchase in purchasedList)
-{
-    var date = Timestamp.dateFromTimestamp(purchase.PurchasedDate);
-    <div> Name : @purchase.Name</div>
-    <div> Date:  @date</div>
-    <div>Price: @purchase.Price</div>
-    <div>Quantity : @purchase.Quantity</div>
-    <div>
-        ActivationCode : @purchase.ActivationCode[0] ,
-        @if (@purchase.ActivationCode.Count > 1)
-        {@purchase.ActivationCode[1]}
-    </div>
-
-    <div>**************************************************</div>
 }
 
